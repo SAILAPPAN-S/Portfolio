@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import { motion } from 'framer-motion';
+import NeuralBackground from './NeuralBackground';
 
 const HeroSection = () => {
   const [currentTextIndex, setCurrentTextIndex] = useState(0);
@@ -64,37 +65,16 @@ const HeroSection = () => {
 
   return (
     <section id="hero" className="min-h-screen flex items-center justify-center relative overflow-hidden">
-      {/* Animated Background */}
-      <div className="absolute inset-0 bg-gradient-to-br from-slate-900 via-slate-800 to-slate-900">
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/10 via-transparent to-purple-500/10"></div>
-      </div>
+      {/* Animated Background Layers */}
+      <div className="absolute inset-0 bg-gradient-to-br from-slate-950 via-slate-900 to-black z-[-2]"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-cyan-500/10 via-transparent to-purple-600/10 z-[-1]"></div>
 
-      {/* Floating Particles */}
-      <div className="absolute inset-0 overflow-hidden">
-        {[...Array(20)].map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute w-1 h-1 bg-cyan-400 rounded-full"
-            style={{
-              left: `${Math.random() * 100}%`,
-              top: `${Math.random() * 100}%`,
-            }}
-            animate={{
-              y: [0, -100, 0],
-              opacity: [0, 1, 0],
-            }}
-            transition={{
-              duration: Math.random() * 3 + 2,
-              repeat: Infinity,
-              delay: Math.random() * 2,
-            }}
-          />
-        ))}
-      </div>
+      {/* 3D Neural Network Background */}
+      <NeuralBackground />
 
       {/* Content */}
       <motion.div
-        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto"
+        className="relative z-10 text-center px-4 sm:px-6 lg:px-8 max-w-5xl mx-auto backdrop-blur-sm bg-slate-900/30 p-12 rounded-3xl border border-slate-700/50 shadow-2xl"
         variants={containerVariants}
         initial="hidden"
         animate="visible"

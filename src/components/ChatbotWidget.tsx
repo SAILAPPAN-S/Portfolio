@@ -1,7 +1,8 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
+import { Terminal, Send, X, Cpu } from 'lucide-react';
 
 interface Message {
   id: number;
@@ -15,20 +16,31 @@ const ChatbotWidget = () => {
   const [messages, setMessages] = useState<Message[]>([
     {
       id: 1,
-      text: "Hey there! 👋 I'm Sailappan's AI assistant. I can tell you all about his AI/ML expertise, cool projects, or help you get in touch. What would you like to know?",
+      text: "> system initialized.\n> loading profile AI/ML Expert...\n> connection established. How can I assist you?",
       isBot: true,
       timestamp: new Date()
     }
   ]);
   const [inputValue, setInputValue] = useState('');
   const [isLoading, setIsLoading] = useState(false);
+  const messagesEndRef = useRef<HTMLDivElement>(null);
+
+  const scrollToBottom = () => {
+    messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
+
+  useEffect(() => {
+    if (isOpen) {
+      scrollToBottom();
+    }
+  }, [messages, isOpen]);
 
   const handleSendMessage = async () => {
     if (!inputValue.trim() || isLoading) return;
 
     const userMessage: Message = {
       id: Date.now(),
-      text: inputValue.trim(),
+      text: `> ${inputValue.trim()}`,
       isBot: false,
       timestamp: new Date()
     };
@@ -40,9 +52,7 @@ const ChatbotWidget = () => {
     try {
       const response = await fetch('/api/chat', {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ query: inputValue.trim() }),
       });
 
@@ -51,7 +61,7 @@ const ChatbotWidget = () => {
       if (data.success) {
         const botMessage: Message = {
           id: Date.now() + 1,
-          text: data.response,
+          text: `> ${data.response}`,
           isBot: true,
           timestamp: new Date()
         };
@@ -59,7 +69,7 @@ const ChatbotWidget = () => {
       } else {
         const errorMessage: Message = {
           id: Date.now() + 1,
-          text: "Sorry, I'm having trouble connecting right now. Please try again later! 🤖",
+          text: "> ERROR: connection failed. Please try again later.",
           isBot: true,
           timestamp: new Date()
         };
@@ -69,7 +79,7 @@ const ChatbotWidget = () => {
       console.error('Chat error:', error);
       const errorMessage: Message = {
         id: Date.now() + 1,
-        text: "Oops! Something went wrong. Please check your connection and try again! 🔌",
+        text: "> FATAL ERROR: network request failed.",
         isBot: true,
         timestamp: new Date()
       };
@@ -87,7 +97,6 @@ const ChatbotWidget = () => {
 
   const handleQuickAction = async (action: string) => {
     setInputValue(action);
-    // Small delay to ensure input is set
     setTimeout(() => {
       handleSendMessage();
     }, 100);
@@ -97,7 +106,7 @@ const ChatbotWidget = () => {
     <>
       {/* Floating Chat Button */}
       <motion.button
-        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full shadow-lg hover:shadow-cyan-400/25 transition-all duration-300 flex items-center justify-center"
+        className="fixed bottom-6 right-6 z-50 w-16 h-16 bg-slate-900 border border-cyan-500/50 rounded-full shadow-[0_0_15px_rgba(34,211,238,0.5)] hover:shadow-[0_0_25px_rgba(34,211,238,0.8)] transition-all duration-300 flex items-center justify-center backdrop-blur-md"
         whileHover={{ scale: 1.1 }}
         whileTap={{ scale: 0.9 }}
         onClick={() => setIsOpen(!isOpen)}
@@ -105,12 +114,8 @@ const ChatbotWidget = () => {
         animate={{ scale: 1 }}
         transition={{ delay: 2, type: "spring", stiffness: 200 }}
       >
-        {/* Glow effect */}
-        <div className="absolute inset-0 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full blur-xl opacity-50 animate-pulse"></div>
-        
-        {/* Icon */}
-        <div className="relative z-10 text-white text-2xl">
-          {isOpen ? '✕' : '🤖'}
+        <div className="relative z-10 text-cyan-400">
+          {isOpen ? <X size={28} /> : <Terminal size={28} />}
         </div>
       </motion.button>
 
@@ -118,43 +123,38 @@ const ChatbotWidget = () => {
       <AnimatePresence>
         {isOpen && (
           <motion.div
-            className="fixed bottom-24 right-6 z-50 w-80 h-96 bg-slate-800 border border-slate-700 rounded-2xl shadow-2xl overflow-hidden"
+            className="fixed bottom-24 right-6 z-50 w-80 sm:w-96 h-[30rem] bg-slate-950/95 border border-cyan-500/30 rounded-lg shadow-2xl overflow-hidden font-mono backdrop-blur-xl"
             initial={{ opacity: 0, scale: 0.8, y: 20 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.8, y: 20 }}
             transition={{ type: "spring", stiffness: 300, damping: 30 }}
           >
-            {/* Glowing border */}
-            <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-2xl blur opacity-50"></div>
-            
-            {/* Chat Header */}
-            <div className="relative z-10 bg-gradient-to-r from-slate-800 to-slate-700 px-4 py-3 border-b border-slate-600">
-              <h3 className="text-white font-semibold flex items-center gap-2">
-                <span className="text-cyan-400">Sailappan&apos;s AI Assistant</span>
-                <span className="text-2xl">🤖</span>
-              </h3>
-              <p className="text-xs text-gray-400">AI & ML Expert</p>
+            {/* Terminal Header */}
+            <div className="bg-slate-900 border-b border-cyan-500/30 px-4 py-2 flex items-center justify-between">
+              <div className="flex items-center gap-2 text-cyan-400 text-xs">
+                <Cpu size={14} />
+                <span>sailappan_ai_cli v1.0.0</span>
+              </div>
+              <div className="flex gap-1.5">
+                <div className="w-2.5 h-2.5 rounded-full bg-red-500/80"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-yellow-500/80"></div>
+                <div className="w-2.5 h-2.5 rounded-full bg-green-500/80"></div>
+              </div>
             </div>
 
             {/* Messages Container */}
-            <div className="relative z-10 h-64 overflow-y-auto p-4 space-y-3 bg-slate-800/50">
+            <div className="relative z-10 h-[calc(100%-8rem)] overflow-y-auto p-4 space-y-4 text-sm" style={{ scrollbarWidth: 'thin', scrollbarColor: '#22d3ee transparent' }}>
               {messages.map((message) => (
                 <motion.div
                   key={message.id}
-                  className={`flex ${message.isBot ? 'justify-start' : 'justify-end'}`}
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
-                  transition={{ duration: 0.3 }}
+                  className={`flex ${message.isBot ? 'text-cyan-400' : 'text-purple-400 justify-end'}`}
+                  initial={{ opacity: 0, x: message.isBot ? -10 : 10 }}
+                  animate={{ opacity: 1, x: 0 }}
+                  transition={{ duration: 0.2 }}
                 >
-                  <div
-                    className={`max-w-xs px-3 py-2 rounded-lg ${
-                      message.isBot
-                        ? 'bg-slate-700 text-white'
-                        : 'bg-gradient-to-r from-cyan-400 to-purple-500 text-white'
-                    }`}
-                  >
-                    <p className="text-sm">{message.text}</p>
-                    <p className="text-xs opacity-60 mt-1">
+                  <div className="max-w-[90%] whitespace-pre-wrap">
+                    <p>{message.text}</p>
+                    <p className="text-[10px] opacity-40 mt-1 text-slate-500 text-right">
                       {message.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}
                     </p>
                   </div>
@@ -164,62 +164,56 @@ const ChatbotWidget = () => {
               {/* Loading indicator */}
               {isLoading && (
                 <motion.div
-                  className="flex justify-start"
-                  initial={{ opacity: 0, y: 10 }}
-                  animate={{ opacity: 1, y: 0 }}
+                  className="flex justify-start text-cyan-400"
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
                 >
-                  <div className="bg-slate-700 text-white px-3 py-2 rounded-lg">
-                    <div className="flex items-center space-x-2">
-                      <div className="flex space-x-1">
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.1s' }}></div>
-                        <div className="w-2 h-2 bg-cyan-400 rounded-full animate-bounce" style={{ animationDelay: '0.2s' }}></div>
-                      </div>
-                      <span className="text-xs">Thinking...</span>
-                    </div>
+                  <div className="flex items-center space-x-1">
+                    <span>{'> processing'}</span>
+                    <span className="animate-pulse">_</span>
                   </div>
                 </motion.div>
               )}
+              <div ref={messagesEndRef} />
             </div>
 
             {/* Input Area */}
-            <div className="relative z-10 bg-slate-800 p-4 border-t border-slate-600">
-              <div className="flex gap-2">
-                <input
-                  type="text"
-                  value={inputValue}
-                  onChange={(e) => setInputValue(e.target.value)}
-                  onKeyPress={handleKeyPress}
-                  placeholder="Type your message..."
-                  disabled={isLoading}
-                  className="flex-1 px-3 py-2 bg-slate-700 border border-slate-600 rounded-lg text-white placeholder-gray-400 focus:outline-none focus:border-cyan-400/50 focus:ring-2 focus:ring-cyan-400/20 transition-all duration-300 text-sm disabled:opacity-50"
-                />
+            <div className="absolute bottom-0 w-full bg-slate-900/80 p-3 border-t border-cyan-500/30 backdrop-blur-sm">
+              <div className="flex gap-2 mb-2">
+                <div className="relative flex-1">
+                  <span className="absolute left-3 top-2 text-cyan-500">~$</span>
+                  <input
+                    type="text"
+                    value={inputValue}
+                    onChange={(e) => setInputValue(e.target.value)}
+                    onKeyPress={handleKeyPress}
+                    placeholder="execute cmd..."
+                    disabled={isLoading}
+                    className="w-full pl-8 pr-3 py-2 bg-black/50 border border-slate-700 rounded text-cyan-300 placeholder-slate-600 focus:outline-none focus:border-cyan-500/50 transition-colors text-sm disabled:opacity-50"
+                  />
+                </div>
                 <motion.button
                   onClick={handleSendMessage}
                   disabled={isLoading}
                   whileHover={{ scale: isLoading ? 1 : 1.05 }}
                   whileTap={{ scale: isLoading ? 1 : 0.95 }}
-                  className="px-4 py-2 bg-gradient-to-r from-cyan-400 to-purple-500 text-white rounded-lg hover:shadow-lg hover:shadow-cyan-400/25 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                  className="px-3 py-2 bg-cyan-500/20 text-cyan-400 border border-cyan-500/50 rounded hover:bg-cyan-500/30 transition-all duration-300 disabled:opacity-50"
                 >
-                  <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 19l9 2-9-18-9 18 9-2zm0 0v-8" />
-                  </svg>
+                  <Send size={16} />
                 </motion.button>
               </div>
               
               {/* Quick Actions */}
-              <div className="flex gap-2 mt-3">
-                {['skills', 'projects', 'AI/ML', 'resume'].map((action) => (
-                  <motion.button
+              <div className="flex gap-2 overflow-x-auto pb-1 scrollbar-hide">
+                {['skills', 'projects', 'resume', 'contact'].map((action) => (
+                  <button
                     key={action}
                     onClick={() => handleQuickAction(action)}
                     disabled={isLoading}
-                    whileHover={{ scale: isLoading ? 1 : 1.05 }}
-                    whileTap={{ scale: isLoading ? 1 : 0.95 }}
-                    className="px-3 py-1 bg-slate-700/50 border border-slate-600 text-gray-300 rounded-full text-xs hover:border-cyan-400/50 hover:text-cyan-400 transition-all duration-300 disabled:opacity-50 disabled:cursor-not-allowed"
+                    className="whitespace-nowrap px-2 py-0.5 bg-slate-800 border border-slate-700 text-slate-400 rounded text-[10px] hover:border-cyan-500/50 hover:text-cyan-400 transition-colors disabled:opacity-50"
                   >
-                    {action}
-                  </motion.button>
+                    ./{action}.sh
+                  </button>
                 ))}
               </div>
             </div>

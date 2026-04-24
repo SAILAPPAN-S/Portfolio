@@ -109,12 +109,15 @@ const ProjectsSection = () => {
             <motion.div
               key={project.id}
               variants={itemVariants}
-              whileHover={{ y: -8, scale: 1.02 }}
-              className="bg-slate-800/50 border border-slate-700 rounded-2xl p-6 h-80 flex flex-col hover:border-cyan-400/50 hover:shadow-xl hover:shadow-cyan-400/10 transition-all duration-300 cursor-pointer backdrop-blur-sm"
+              whileHover={{ y: -10, scale: 1.02 }}
+              className="group relative bg-slate-900/40 border border-slate-700/50 rounded-2xl p-6 h-80 flex flex-col hover:border-cyan-500/50 hover:shadow-[0_0_30px_rgba(34,211,238,0.15)] transition-all duration-500 cursor-pointer backdrop-blur-xl overflow-hidden"
               onClick={() => setSelectedProject(project)}
             >
+              {/* Card Hover Gradient */}
+              <div className="absolute inset-0 bg-gradient-to-br from-cyan-500/5 via-transparent to-purple-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+
               {/* Project Header */}
-              <div className="mb-4 flex-shrink-0">
+              <div className="mb-4 flex-shrink-0 relative z-10">
                 <h3 className="text-xl font-bold text-white mb-3 line-clamp-2">{project.title}</h3>
                 <p className="text-gray-400 text-sm leading-relaxed line-clamp-3">{project.description}</p>
               </div>
@@ -139,7 +142,7 @@ const ProjectsSection = () => {
               </div>
 
               {/* Action Buttons */}
-              <div className="flex gap-3 mt-auto">
+              <div className="flex gap-3 mt-auto relative z-10 opacity-0 group-hover:opacity-100 transition-opacity duration-300">
                 <motion.a
                   href={project.githubUrl}
                   target="_blank"

@@ -3,173 +3,163 @@
 import { motion } from 'framer-motion';
 import { useInView } from 'framer-motion';
 import { useRef } from 'react';
+import {
+  Radar,
+  RadarChart,
+  PolarGrid,
+  PolarAngleAxis,
+  PolarRadiusAxis,
+  ResponsiveContainer,
+  Tooltip,
+} from 'recharts';
 
 const SkillsSection = () => {
   const ref = useRef(null);
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
-  const skills = [
-    { name: 'Python', icon: '🐍', color: 'from-green-400 to-emerald-500', level: 5 },
-    { name: 'C++', icon: '⚡', color: 'from-blue-400 to-cyan-500', level: 4 },
-    { name: 'HTML/CSS', icon: '🌐', color: 'from-orange-400 to-red-500', level: 4 },
-    { name: 'Pandas', icon: '📊', color: 'from-blue-400 to-indigo-500', level: 4 },
-    { name: 'NumPy', icon: '🔢', color: 'from-green-400 to-emerald-500', level: 4 },
-    { name: 'Machine Learning', icon: '🤖', color: 'from-purple-400 to-pink-500', level: 4 },
-    { name: 'Computer Vision', icon: '👁️', color: 'from-blue-400 to-cyan-500', level: 3 },
-    { name: 'Deep Learning', icon: '🧠', color: 'from-orange-400 to-red-500', level: 3 },
-    { name: 'TensorFlow', icon: '🔥', color: 'from-orange-400 to-red-500', level: 2 },
-    { name: 'PyTorch', icon: '⚡', color: 'from-red-400 to-orange-500', level: 2 },
+  const skillsData = [
+    { subject: 'Python', level: 90, fullMark: 100 },
+    { subject: 'C++', level: 80, fullMark: 100 },
+    { subject: 'Pandas/NumPy', level: 85, fullMark: 100 },
+    { subject: 'Machine Learning', level: 80, fullMark: 100 },
+    { subject: 'Computer Vision', level: 75, fullMark: 100 },
+    { subject: 'Deep Learning', level: 70, fullMark: 100 },
+    { subject: 'TensorFlow/PyTorch', level: 65, fullMark: 100 },
+  ];
+
+  const tools = [
+    { name: 'Git', icon: '🔧' },
+    { name: 'Docker', icon: '🐳' },
+    { name: 'AWS', icon: '☁️' },
+    { name: 'Linux', icon: '🐧' },
+    { name: 'VS Code', icon: '💻' },
+    { name: 'Jupyter', icon: '📓' },
   ];
 
   const containerVariants = {
     hidden: { opacity: 0 },
     visible: {
       opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-        delayChildren: 0.2,
-      },
+      transition: { staggerChildren: 0.1, delayChildren: 0.2 },
     },
   };
 
-  const cardVariants = {
-    hidden: { y: 50, opacity: 0, scale: 0.8 },
-    visible: {
-      y: 0,
-      opacity: 1,
-      scale: 1,
-      transition: {
-        duration: 0.6,
-        ease: "easeOut" as const,
-      },
-    },
+  const itemVariants = {
+    hidden: { opacity: 0, y: 20 },
+    visible: { opacity: 1, y: 0, transition: { duration: 0.6 } },
+  };
+
+  // Custom tool tip for Radar Chart
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const CustomTooltip = ({ active, payload }: { active?: boolean; payload?: any[] }) => {
+    if (active && payload && payload.length) {
+      return (
+        <div className="bg-slate-900/90 border border-cyan-400/50 p-3 rounded-lg shadow-xl backdrop-blur-md">
+          <p className="text-cyan-400 font-semibold">{payload[0].payload.subject}</p>
+          <p className="text-white text-sm">Proficiency: {payload[0].value}%</p>
+        </div>
+      );
+    }
+    return null;
   };
 
   return (
     <section id="skills" className="min-h-screen flex items-center py-20 relative overflow-hidden">
-      {/* Background Pattern */}
-      <div className="absolute inset-0 bg-slate-800/5"></div>
+      {/* Background Ambience */}
+      <div className="absolute inset-0 bg-slate-950 z-[-2]"></div>
+      <div className="absolute -top-40 -right-40 w-96 h-96 bg-purple-600/10 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
+      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-cyan-600/10 rounded-full blur-[120px] pointer-events-none z-[-1]"></div>
       
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 w-full z-10">
         <motion.div
-          ref={ref}
-          className="text-center mb-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8 }}
+           ref={ref}
+           className="text-center mb-16"
+           initial={{ opacity: 0, y: 30 }}
+           animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
+           transition={{ duration: 0.8 }}
         >
-          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white to-cyan-400 bg-clip-text text-transparent">
-            Skills
+          <h2 className="text-4xl sm:text-5xl font-bold mb-4 bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent">
+            Technical Arsenal
           </h2>
-          <div className="w-20 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mx-auto"></div>
+          <div className="w-24 h-1 bg-gradient-to-r from-cyan-400 to-purple-500 rounded-full mx-auto"></div>
         </motion.div>
 
-        <motion.div
-          className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 lg:gap-8"
-          variants={containerVariants}
-          initial="hidden"
-          animate={isInView ? "visible" : "hidden"}
-        >
-          {skills.map((skill, index) => (
-            <motion.div
-              key={skill.name}
-              className="group relative"
-              variants={cardVariants}
-            >
-              {/* Skill Card */}
-              <div className="relative bg-slate-800/50 border border-slate-700/50 rounded-xl p-6 backdrop-blur-sm transition-all duration-300 group-hover:border-cyan-400/50 group-hover:bg-slate-800/70">
-                {/* Glowing border effect */}
-                <div className="absolute -inset-0.5 bg-gradient-to-r from-cyan-400/20 to-purple-500/20 rounded-xl blur opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                
-                {/* Card content */}
-                <div className="relative z-10 text-center">
-                  {/* Skill Icon */}
-                  <div className="text-4xl mb-4 group-hover:scale-110 transition-transform duration-300">
-                    {skill.icon}
-                  </div>
-                  
-                  {/* Skill Name */}
-                  <h3 className="text-lg font-semibold text-white mb-2 group-hover:text-cyan-400 transition-colors duration-300">
-                    {skill.name}
-                  </h3>
-                  
-                  {/* Skill Level Indicator */}
-                  <div className="flex justify-center space-x-1">
-                    {[...Array(5)].map((_, i) => (
-                      <div
-                        key={i}
-                        className={`w-2 h-2 rounded-full transition-all duration-300 ${
-                          i < skill.level
-                            ? 'bg-gradient-to-r from-cyan-400 to-purple-500'
-                            : 'bg-slate-600'
-                        }`}
-                      />
-                    ))}
-                  </div>
-                </div>
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 items-center">
+          {/* Left Side: Interactive Radar Chart */}
+          <motion.div 
+            className="w-full h-[400px] sm:h-[500px] bg-slate-900/40 border border-slate-700/50 rounded-3xl p-4 backdrop-blur-sm shadow-2xl relative group"
+            initial={{ opacity: 0, x: -50 }}
+            animate={isInView ? { opacity: 1, x: 0 } : { opacity: 0, x: -50 }}
+            transition={{ duration: 0.8, delay: 0.2 }}
+          >
+            <div className="absolute inset-0 bg-gradient-to-br from-cyan-400/5 to-purple-500/5 rounded-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
+            <ResponsiveContainer width="100%" height="100%">
+              <RadarChart cx="50%" cy="50%" outerRadius="70%" data={skillsData}>
+                <PolarGrid stroke="#334155" />
+                <PolarAngleAxis dataKey="subject" tick={{ fill: '#94a3b8', fontSize: 12 }} />
+                <PolarRadiusAxis angle={30} domain={[0, 100]} tick={false} axisLine={false} />
+                <Tooltip content={<CustomTooltip />} />
+                <Radar
+                   name="Skills"
+                   dataKey="level"
+                   stroke="#00d4ff"
+                   strokeWidth={2}
+                   fill="#00d4ff"
+                   fillOpacity={0.3}
+                />
+              </RadarChart>
+            </ResponsiveContainer>
+          </motion.div>
 
-                {/* Hover glow effect */}
-                <div className="absolute inset-0 bg-gradient-to-r from-cyan-400/5 to-purple-500/5 rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+          {/* Right Side: Tools & Currently Learning */}
+          <motion.div
+            variants={containerVariants}
+            initial="hidden"
+            animate={isInView ? "visible" : "hidden"}
+            className="space-y-8"
+          >
+            <div>
+              <h3 className="text-2xl font-semibold text-white mb-6 flex items-center gap-2">
+                <span className="text-cyan-400">⚡</span> Tools & Technologies
+              </h3>
+              <div className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                {tools.map((tool) => (
+                  <motion.div
+                    key={tool.name}
+                    variants={itemVariants}
+                    className="flex justify-center items-center gap-3 bg-slate-800/40 hover:bg-slate-700/60 border border-slate-700 hover:border-cyan-400/50 p-4 rounded-xl transition-all duration-300 cursor-default group"
+                  >
+                    <span className="text-2xl group-hover:scale-110 transition-transform">{tool.icon}</span>
+                    <span className="text-sm font-medium text-slate-300 group-hover:text-cyan-300">{tool.name}</span>
+                  </motion.div>
+                ))}
               </div>
+            </div>
 
-              {/* Floating particles around card */}
-              <motion.div
-                className="absolute -top-2 -right-2 w-2 h-2 bg-cyan-400 rounded-full opacity-0 group-hover:opacity-100"
-                animate={{ 
-                  scale: [1, 1.2, 1], 
-                  opacity: [0, 1, 0] 
-                }}
-                transition={{ 
-                  duration: 2, 
-                  repeat: Infinity, 
-                  delay: index * 0.2 
-                }}
-              />
-              <motion.div
-                className="absolute -bottom-2 -left-2 w-1.5 h-1.5 bg-purple-500 rounded-full opacity-0 group-hover:opacity-100"
-                animate={{ 
-                  scale: [1, 1.3, 1], 
-                  opacity: [0, 1, 0] 
-                }}
-                transition={{ 
-                  duration: 2.5, 
-                  repeat: Infinity, 
-                  delay: index * 0.2 + 0.5 
-                }}
-              />
-            </motion.div>
-          ))}
-        </motion.div>
-
-        {/* Additional Info */}
-        <motion.div
-          className="text-center mt-16"
-          initial={{ opacity: 0, y: 30 }}
-          animate={isInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 30 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-        >
-          <div className="max-w-4xl mx-auto space-y-6">
-            <p className="text-gray-400 text-lg">
-              Continuously expanding my skill set through hands-on projects and real-world applications. 
-              Always eager to learn new technologies and frameworks in the AI/ML ecosystem.
-            </p>
-            
-            {/* Currently Learning Section */}
-            <div className="bg-slate-800/30 border border-slate-700/30 rounded-xl p-6">
-              <h3 className="text-xl font-semibold text-cyan-400 mb-4">Currently Learning</h3>
-              <div className="flex flex-wrap justify-center gap-3">
-                {['TensorFlow', 'PyTorch', 'Japanese (JLPT N5)'].map((skill) => (
+            <motion.div 
+               variants={itemVariants}
+               className="bg-gradient-to-r from-purple-500/10 to-cyan-500/10 border border-purple-500/20 rounded-2xl p-6 backdrop-blur-md"
+            >
+              <h3 className="text-xl font-semibold text-purple-400 mb-4 flex items-center gap-2">
+                <span>🎯</span> Currently Mastering
+              </h3>
+              <p className="text-slate-300 text-sm leading-relaxed mb-4">
+                Continuously expanding my skill set through hands-on projects and real-world applications in the AI/ML ecosystem.
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {['Advanced PyTorch', 'MLOps Frameworks', 'LLM Fine-tuning'].map((skill) => (
                   <span
                     key={skill}
-                    className="px-3 py-1 bg-cyan-400/10 border border-cyan-400/30 text-cyan-400 rounded-full text-sm"
+                    className="px-3 py-1.5 bg-slate-900/50 border border-purple-500/30 text-purple-300 rounded-lg text-xs font-mono"
                   >
                     {skill}
                   </span>
                 ))}
               </div>
-            </div>
-          </div>
-        </motion.div>
+            </motion.div>
+
+          </motion.div>
+        </div>
       </div>
     </section>
   );
