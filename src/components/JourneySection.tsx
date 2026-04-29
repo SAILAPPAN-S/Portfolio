@@ -11,10 +11,10 @@ const JourneySection = () => {
   const timelineEvents = [
     {
       id: 1,
-      title: "Tamizhan Skills Internship (2024)",
+      title: "Hynox (Dec 2025 - Ongoing)",
       description: "Gained hands-on experience in AI/ML technologies and real-world project development. Worked on cutting-edge machine learning models and data analysis projects.",
       icon: "🎯",
-      year: "2024",
+      year: "2025-2026",
       category: "Internship"
     },
     {

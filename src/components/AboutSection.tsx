@@ -137,8 +137,8 @@ const AboutSection = () => {
                       <p className="text-gray-300">
                         <span className="text-green-400 font-semibold">Bachelor of Engineering in Computer Science</span>
                       </p>
-                      <p className="text-gray-400 text-sm">SNS College of Engineering • 2021 - 2025</p>
-                      <p className="text-gray-400 text-sm">CGPA: 8.5/10 • Specialization in AI & Machine Learning</p>
+                      <p className="text-gray-400 text-sm">SNS College of Engineering • 2023 - 2027</p>
+                      <p className="text-gray-400 text-sm">CGPA: 8.5/10 • Specializing in AI & Machine Learning</p>
                     </div>
                   </div>
                   <div className="flex items-start space-x-3">
@@ -148,7 +148,7 @@ const AboutSection = () => {
                         <span className="text-blue-400 font-semibold">Higher Secondary Education (HSC)</span>
                       </p>
                       <p className="text-gray-400 text-sm">Good Shepherd Matriculation Higher Secondary School</p>
-                      <p className="text-gray-400 text-sm">Percentage: 85% • Science Stream with Computer Science</p>
+                      <p className="text-gray-400 text-sm">Percentage: 85% •Computer Science Stream</p>
                     </div>
                   </div>
                 </div>
