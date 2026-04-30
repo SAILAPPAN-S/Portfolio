@@ -10,8 +10,8 @@ const HeroSection = () => {
   const [isDeleting, setIsDeleting] = useState(false);
 
   const texts = useMemo(() => [
-    "AI & ML Engineer",
-    "Crafting Intelligent Solutions for Real-World Challenges"
+    "AI Systems Builder",
+    "Building intelligent systems using ML, RAG & CV"
   ], []);
 
   useEffect(() => {
@@ -84,7 +84,7 @@ const HeroSection = () => {
           className="text-4xl sm:text-6xl lg:text-7xl font-bold mb-6 bg-gradient-to-r from-white via-cyan-400 to-purple-500 bg-clip-text text-transparent"
           variants={itemVariants}
         >
-          Sailappan
+          Sailappan S
         </motion.h1>
 
         {/* Title */}
@@ -92,7 +92,7 @@ const HeroSection = () => {
           className="text-xl sm:text-2xl lg:text-3xl text-gray-300 mb-8 font-light"
           variants={itemVariants}
         >
-          AI & ML Engineer
+          AI Systems Builder
         </motion.h2>
 
         {/* Animated Tagline */}

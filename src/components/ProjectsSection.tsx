@@ -18,31 +18,21 @@ interface Project {
 const projects: Project[] = [
   {
     id: 1,
-    title: "Typing Tutor Model",
-    description: "AI-powered typing tutor with keystroke dynamics analysis, weak key detection, and adaptive word suggestions.",
-    longDescription: "An intelligent typing tutor application that leverages machine learning and keystroke dynamics to personalize the learning experience. The system analyzes typing patterns, detects weak keys, and provides adaptive word suggestions based on user performance. Features include real-time feedback, progress tracking, and API-based architecture for scalability.",
+    title: "Multimodal Document Intelligence System",
+    description: "Built an AI-powered system to analyze documents containing text, tables, and images",
+    longDescription: "Built an AI-powered system to analyze documents containing text, tables, and images. Implemented Retrieval-Augmented Generation (RAG) for intelligent querying. Designed multi-agent architecture for text, vision, and validation reasoning. Integrated CLIP-based embeddings for cross-modal retrieval.",
     category: "AI/ML",
-    techStack: ["Python", "Keystroke Dynamics", "Machine Learning", "API"],
+    techStack: ["FastAPI", "Python", "RAG", "CLIP", "Docker", "ChromaDB"],
     githubUrl: "#",
     demoUrl: "#"
   },
   {
     id: 2,
-    title: "Face Recognition Attendance System",
-    description: "CCTV-based attendance system with hand raise detection, SMS confirmation, and timestamp tracking.",
-    longDescription: "A comprehensive attendance management system that uses computer vision and face recognition technology. The system operates through CCTV cameras, detects hand raises for attendance marking, sends SMS confirmations, and maintains detailed timestamps. Features include mobile app integration, real-time monitoring, and automated reporting.",
+    title: "Smart Attendance System using Face Recognition",
+    description: "Developed real-time face recognition system for automated attendance",
+    longDescription: "Developed real-time face recognition system for automated attendance. Implemented liveness detection (blink detection) to prevent spoofing. Built dashboard for monitoring, analytics, and student management. Enabled report generation (CSV, Excel, PDF).",
     category: "AI/ML",
-    techStack: ["Python", "OpenCV", "Face Recognition", "SMS API", "Mobile App"],
-    githubUrl: "#",
-    demoUrl: "#"
-  },
-  {
-    id: 3,
-    title: "GUIDY",
-    description: "AI + AR + sustainability tourism modernization platform for enhanced travel experiences.",
-    longDescription: "An innovative tourism platform that combines artificial intelligence, augmented reality, and sustainability principles to modernize the travel industry. GUIDY provides intelligent recommendations, AR-enhanced navigation, and promotes eco-friendly tourism practices. Features include personalized itineraries, AR landmarks, and sustainability scoring.",
-    category: "AI/ML",
-    techStack: ["AI", "AR", "Sustainability", "Tourism Tech"],
+    techStack: ["Python", "OpenCV", "Streamlit", "SQLite"],
     githubUrl: "#",
     demoUrl: "#"
   }

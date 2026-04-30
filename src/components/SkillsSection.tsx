@@ -18,22 +18,21 @@ const SkillsSection = () => {
   const isInView = useInView(ref, { once: true, margin: "-100px" });
 
   const skillsData = [
-    { subject: 'Python', level: 90, fullMark: 100 },
-    { subject: 'C++', level: 80, fullMark: 100 },
-    { subject: 'Pandas/NumPy', level: 85, fullMark: 100 },
-    { subject: 'Machine Learning', level: 80, fullMark: 100 },
-    { subject: 'Computer Vision', level: 75, fullMark: 100 },
-    { subject: 'Deep Learning', level: 70, fullMark: 100 },
-    { subject: 'TensorFlow/PyTorch', level: 65, fullMark: 100 },
+    { subject: 'Python & C++', level: 90, fullMark: 100 },
+    { subject: 'Scikit-learn', level: 85, fullMark: 100 },
+    { subject: 'RAG', level: 80, fullMark: 100 },
+    { subject: 'Flask', level: 80, fullMark: 100 },
+    { subject: 'Docker', level: 75, fullMark: 100 },
+    { subject: 'SQL', level: 80, fullMark: 100 },
   ];
 
   const tools = [
     { name: 'Git', icon: '🔧' },
-    { name: 'Docker', icon: '🐳' },
-    { name: 'AWS', icon: '☁️' },
-    { name: 'Linux', icon: '🐧' },
     { name: 'VS Code', icon: '💻' },
-    { name: 'Jupyter', icon: '📓' },
+    { name: 'Linux', icon: '🐧' },
+    { name: 'Python', icon: '🐍' },
+    { name: 'C++', icon: '⚙️' },
+    { name: 'SQL', icon: '🗄️' },
   ];
 
   const containerVariants = {
@@ -147,7 +146,7 @@ const SkillsSection = () => {
                 Continuously expanding my skill set through hands-on projects and real-world applications in the AI/ML ecosystem.
               </p>
               <div className="flex flex-wrap gap-2">
-                {['Advanced PyTorch', 'MLOps Frameworks', 'LLM Fine-tuning'].map((skill) => (
+                {['RAG', 'Computer Vision', 'Backend Scaling'].map((skill) => (
                   <span
                     key={skill}
                     className="px-3 py-1.5 bg-slate-900/50 border border-purple-500/30 text-purple-300 rounded-lg text-xs font-mono"

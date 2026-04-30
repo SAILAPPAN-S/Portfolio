@@ -79,7 +79,7 @@ const AboutSection = () => {
                       </svg>
                     </div>
                     <p className="text-cyan-400 font-mono text-sm">Sailappan S</p>
-                    <p className="text-gray-400 text-xs mt-1">AI/ML Engineer</p>
+                    <p className="text-gray-400 text-xs mt-1">AI Systems Builder</p>
                   </div>
                 </div>
 
@@ -117,7 +117,7 @@ const AboutSection = () => {
             {/* Introduction */}
             <motion.div variants={itemVariants}>
               <p className="text-lg text-gray-300 leading-relaxed">
-                I&apos;m <span className="text-cyan-400 font-semibold">Sailappan S</span>, an AI & ML Engineer passionate about solving real-world challenges through ML, AI and intelligent automation. I focus on building practical, end-to-end machine learning systems that make AI accessible and impactful.
+                I am an aspiring AI/ML Engineer focused on building intelligent systems using machine learning, RAG, and computer vision. I enjoy solving real-world problems through practical AI applications and scalable backend systems.
               </p>
             </motion.div>
 
@@ -165,7 +165,7 @@ const AboutSection = () => {
                   Career Goal
                 </h3>
                 <p className="text-gray-300">
-                  <span className="text-purple-400 font-semibold">AI & ML Engineer</span> - Passionate about building intelligent systems and solving real-world challenges through machine learning and artificial intelligence.
+                  <span className="text-purple-400 font-semibold">AI Systems Builder</span> - Passionate about building intelligent systems and solving real-world challenges through machine learning, RAG, and computer vision.
                 </p>
               </div>
             </motion.div>

@@ -11,27 +11,19 @@ const JourneySection = () => {
   const timelineEvents = [
     {
       id: 1,
-      title: "Hynox (Dec 2025 - Ongoing)",
-      description: "Gained hands-on experience in AI/ML technologies and real-world project development. Worked on cutting-edge machine learning models and data analysis projects.",
+      title: "AI/ML Engineer Intern",
+      description: "Company: Hynox. Developed and trained ML models using Scikit-learn. Performed data preprocessing, feature engineering, and model evaluation. Optimized models for better performance.",
       icon: "🎯",
-      year: "2025-2026",
+      year: "Dec 2025 - Present",
       category: "Internship"
     },
     {
       id: 2,
-      title: "Built Typeme (AI Typing Tutor)",
-      description: "Developed an intelligent typing tutor application using keystroke dynamics and machine learning. Created automation workflows with n8n and built several other innovative projects.",
-      icon: "🚀",
-      year: "2024",
-      category: "Projects"
-    },
-    {
-      id: 3,
-      title: "Exploring Advanced ML Models & Automation",
-      description: "Currently diving deep into advanced machine learning algorithms, computer vision techniques, and automation tools. Continuously learning and experimenting with cutting-edge AI technologies.",
-      icon: "🧠",
-      year: "Present",
-      category: "Learning"
+      title: "AI/ML Intern",
+      description: "Company: Infosys Springboard. Built IPL win predictor using EDA and ML models. Compared algorithms and improved prediction performance. Worked on full ML pipeline.",
+      icon: "💻",
+      year: "Previous",
+      category: "Internship"
     }
   ];
 
